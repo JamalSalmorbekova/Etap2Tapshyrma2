@@ -5,11 +5,14 @@ import com.google.gson.GsonBuilder;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.company.State.*;
 
@@ -20,11 +23,12 @@ public class Main {
     public static final Path PATH1 = Paths.get("./driver.json");
 
     public static void main(String[] args) {
-        Truck[] trucks = {
-                Truck.makeATruck(1, "Renault Magnum", "       ", BASE),
-                Truck.makeATruck(2, "Volvo         ", "       ", REPAIR),
-                Truck.makeATruck(3, "DAF XT        ", "       ", ROUTE)
-        };
+
+        Truck truck=new Truck(1, "Renault Magnum", "       ", BASE);
+        Truck truck1=new Truck(2, "Volvo         ", "       ", REPAIR);
+        Truck truck2=new Truck(3, "DAF XT        ", "       ", ROUTE);
+        Truck[]trucks={truck, truck1, truck2};
+
         String json= GSON.toJson(trucks);
         write(json);
         Truck[]trucks1=GSON.fromJson(read(), Truck[].class);
@@ -35,23 +39,27 @@ public class Main {
             System.out.println(t);
 
         }
-        Driver[]drivers={
-                Driver.driver(1, "Victor ", "               "),
-                Driver.driver(2, "Vasiliy", "               "),
-                Driver.driver(3, "Nikolay", "               ")
-
-
-        };
+        Driver driver=new Driver(1, "Victor ", "               ");
+        Driver driver1=new Driver(2, "Vasiliy", "               ");
+        Driver driver2=new Driver(3, "Nikolay", "               ");
+//        Driver[]drivers={
+//                Driver.driver(1, "Victor ", "               "),
+//                Driver.driver(2, "Vasiliy", "               "),
+//                Driver.driver(3, "Nikolay", "               ")
+//
+//
+//        };
+        Driver[]drivers={driver, driver2, driver1};
 
         System.out.println();
 
         String json1=GSON.toJson(drivers);
-        write(json);
-        Driver[]drivers1=GSON.fromJson(read(), Driver[].class);
+        writeDrivers(json1);
+        Driver[]drivers1=GSON.fromJson(readDriver(),  Driver[].class);
         System.out.println("#   |   Driver     |  Bus      ");
         System.out.println("====+==============+============");
 
-        for (Driver d:drivers) {
+        for (Driver d:drivers1) {
             System.out.println(d);
 
         }

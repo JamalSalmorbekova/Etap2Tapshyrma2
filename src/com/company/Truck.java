@@ -55,6 +55,73 @@ public class Truck {
         truck.state=state;
         return truck;
     }
+    public void changeDriver(Truck truck, Driver[] drivers) {
+
+
+        if (state.equals(State.BASE)) {
+            int counter = 0;
+            for (int i = 0; i < drivers.length; i++) {
+                if (drivers[i].getBus() != null) {
+                    counter++;
+                } else {
+                    truck.setDriver(drivers[counter].getName());
+                    drivers[counter].setBus(truck.getName());
+                }
+
+            }
+        }
+        try {
+            if (state.equals(State.ROUTE)) {
+                throw new InvalidChangeAttemptException();
+            }
+        } catch (InvalidChangeAttemptException e) {
+            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE ROUTE", truck.getName());
+        }
+        try {
+            if (state.equals(State.REPAIR)) {
+                throw new InvalidChangeAttemptException();
+            }
+        } catch (InvalidChangeAttemptException e) {
+            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE REPAIR", truck.getName());
+        }
+
+
+    }
+
+    public void startDriving(Truck truck) {
+        if (truck.state.equals(State.BASE)) {
+            truck.setState(State.ROUTE);
+            System.out.println("YOU ARE ON ROUTE");
+        }
+        try {
+            if (truck.getDriver() == null) {
+                throw new InvalidChangeAttemptException();
+            }
+
+        } catch (InvalidChangeAttemptException e) {
+            System.err.printf("THE TRUCK[%S] HAVE NOT A DRIVER", truck.getName());
+        }
+        try {
+            if (state.equals(State.REPAIR)) {
+                throw new InvalidChangeAttemptException();
+            }
+        } catch (InvalidChangeAttemptException e) {
+            System.err.printf("YOU CAN'T COMMENCE TO DRIVE , BECAUSE THE TRUCK[%S] ON THE REPAIR", truck.getName());
+        }
+    }
+
+    public void startRepair(Truck truck) {
+        try {
+            if (state.equals(State.REPAIR)) {
+                throw new InvalidChangeAttemptException();
+            }
+        }catch (InvalidChangeAttemptException e){
+            System.err.printf("THIS TRUCK[%S] ON THE REPAIR", truck.getName());
+        }
+    }
+
+
+
 
     @Override
     public String toString() {
