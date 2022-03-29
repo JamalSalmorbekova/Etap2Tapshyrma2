@@ -55,30 +55,21 @@ public class Truck {
         truck.state=state;
         return truck;
     }
-    public void changeDriver(Truck truck, Driver[] drivers) {
+    public static void changeDriver(Truck truck, Driver driver) {
 
 
-        if (state.equals(State.BASE)) {
-            int counter = 0;
-            for (int i = 0; i < drivers.length; i++) {
-                if (drivers[i].getBus() != null) {
-                    counter++;
-                } else {
-                    truck.setDriver(drivers[counter].getName());
-                    drivers[counter].setBus(truck.getName());
-                }
-
-            }
+        if (truck.state.equals(State.BASE)) {
+            truck.setDriver(driver.getName());
         }
         try {
-            if (state.equals(State.ROUTE)) {
+            if (truck.state.equals(State.ROUTE)) {
                 throw new InvalidChangeAttemptException();
             }
         } catch (InvalidChangeAttemptException e) {
             System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE ROUTE", truck.getName());
         }
         try {
-            if (state.equals(State.REPAIR)) {
+            if (truck.state.equals(State.REPAIR)) {
                 throw new InvalidChangeAttemptException();
             }
         } catch (InvalidChangeAttemptException e) {
@@ -88,10 +79,10 @@ public class Truck {
 
     }
 
-    public void startDriving(Truck truck) {
+    public static void startDriving(Truck truck) {
         if (truck.state.equals(State.BASE)) {
             truck.setState(State.ROUTE);
-            System.out.println("YOU ARE ON ROUTE");
+//            System.out.printf("TRUCK [%S] IS ON ROUTE", truck.getName());
         }
         try {
             if (truck.getDriver() == null) {
@@ -102,7 +93,7 @@ public class Truck {
             System.err.printf("THE TRUCK[%S] HAVE NOT A DRIVER", truck.getName());
         }
         try {
-            if (state.equals(State.REPAIR)) {
+            if (truck.state.equals(State.REPAIR)) {
                 throw new InvalidChangeAttemptException();
             }
         } catch (InvalidChangeAttemptException e) {
@@ -110,9 +101,9 @@ public class Truck {
         }
     }
 
-    public void startRepair(Truck truck) {
+    public static void startRepair(Truck truck) {
         try {
-            if (state.equals(State.REPAIR)) {
+            if (truck.state.equals(State.REPAIR)) {
                 throw new InvalidChangeAttemptException();
             }
         }catch (InvalidChangeAttemptException e){

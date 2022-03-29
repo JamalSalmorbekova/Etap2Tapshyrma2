@@ -29,27 +29,31 @@ public class Main {
         Truck truck2=new Truck(3, "DAF XT        ", "       ", ROUTE);
         Truck[]trucks={truck, truck1, truck2};
 
+
         String json= GSON.toJson(trucks);
         write(json);
         Truck[]trucks1=GSON.fromJson(read(), Truck[].class);
         System.out.println("#   |      Bus     |  Driver   |    State    ");
         System.out.println("====+==============+===========+=============");
 
-        for (Truck t:trucks1) {
+        Truck.startDriving(truck);
+
+        for (Truck t:trucks) {
             System.out.println(t);
 
         }
+
         Driver driver=new Driver(1, "Victor ", "               ");
         Driver driver1=new Driver(2, "Vasiliy", "               ");
         Driver driver2=new Driver(3, "Nikolay", "               ");
-//        Driver[]drivers={
-//                Driver.driver(1, "Victor ", "               "),
-//                Driver.driver(2, "Vasiliy", "               "),
-//                Driver.driver(3, "Nikolay", "               ")
-//
-//
-//        };
+
+
+
+
+
+
         Driver[]drivers={driver, driver2, driver1};
+
 
         System.out.println();
 
@@ -63,6 +67,7 @@ public class Main {
             System.out.println(d);
 
         }
+
     }
 
     public static void write(String o) {
