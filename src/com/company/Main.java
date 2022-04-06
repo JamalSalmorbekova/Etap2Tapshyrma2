@@ -2,10 +2,7 @@ package com.company;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,8 +20,8 @@ public class Main {
     public static void main(String[] args) {
 
         Truck truck = new Truck(1, "Renault Magnum", "       ", BASE);
-        Truck truck1 = new Truck(2, "Volvo         ", "       ", REPAIR);
-        Truck truck2 = new Truck(3, "DAF XT        ", "       ", ROUTE);
+        Truck truck1 = new Truck(2, "Volvo         ", "       ", BASE);
+        Truck truck2 = new Truck(3, "DAF XT        ", "       ", BASE);
         Truck[] trucks = {truck, truck1, truck2};
 
         Driver driver = new Driver(1, "Victor ", "               ");
@@ -32,45 +29,60 @@ public class Main {
         Driver driver2 = new Driver(3, "Nikolay", "               ");
         Driver[] drivers = {driver, driver2, driver1};
 
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.println("ENTER ID OF TRUCK TO SEE ALL INFORMATION ABOUT IT: ");
-        int a = scanner.nextInt();
+        Arrays.stream(trucks).forEach(System.out::println);
 
-        for (Truck t : trucks) {
-            if (a == t.getId()) {
-                System.out.println("N  : " + t.getId());
-                System.out.println("Truck : " + t.getName());
-                System.out.println("Driver : " + t.getDriver());
-                System.out.println("Truck State: " + t.getState());
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("ENTER ID OF TRUCK TO SEE ALL INFORMATION ABOUT IT: ");
+            int a = scanner.nextInt();
+
+            for (Truck t : trucks) {
+                if (a == t.getId()) {
+                    System.out.println("N  : " + t.getId());
+                    System.out.println("Truck : " + t.getName());
+                    System.out.println("Driver : " + t.getDriver());
+                    System.out.println("Truck State: " + t.getState());
+
+
+                    System.out.println("Press 1 to change Driver");
+                    System.out.println("Press 2 to send to the Route");
+                    System.out.println("Press 3 ot send to the Repairing");
+                    int input = scanner.nextInt();
+                    try {
+                        if (input == 1) {
+                            Truck.changeDriver(t, drivers);
+                            System.out.println("-----------------------------");
+                            System.out.println("Driver changed successfully");
+                            printAllInformation(trucks, drivers);
+                        } else if (input == 2) {
+                            Truck.startDriving(t);
+                            System.out.println("-----------------------------");
+                            System.out.println("You have successfully entered the route");
+                            printAllInformation(trucks, drivers);
+                        } else if (input == 3) {
+                            Truck.startRepair(t);
+
+                            System.out.println("-----------------------------");
+                            System.out.println("you have successfully sent for repair");
+                            printAllInformation(trucks, drivers);
+                        } else {
+                            throw new InvalidChangeAttemptException();
+                        }
+                    } catch (InvalidChangeAttemptException e) {
+                        System.err.println("WE COULD NOT FIND THIS NUMBER");
+                    }
+                }
             }
+
+            String json = GSON.toJson(trucks);
+            write(json);
+
+            String json1 = GSON.toJson(drivers);
+            writeDrivers(json1);
         }
-        
 
-
-//        Truck.changeDriver(truck, driver);
-//        Truck.startDriving(truck);
-//        Truck.changeDriver(truck, driver1);
-//
-//        Truck.changeDriver(truck, driver);
-
-        String json = GSON.toJson(trucks);
-        write(json);
-
-        String json1 = GSON.toJson(drivers);
-        writeDrivers(json1);
-
-//        System.out.println("#   |      Bus     |  Driver   |    State    ");
-//        System.out.println("====+==============+===========+=============");
-//
-//        Arrays.stream(trucks).forEach(System.out::println);
-
-//        System.out.println();
-//
-//        System.out.println("#   |   Driver     |  Bus      ");
-//        System.out.println("====+==============+============");
-//
-//        Arrays.stream(drivers).forEach(System.out::println);
     }
 
     public static void write(String o) {
@@ -90,6 +102,15 @@ public class Main {
             e.printStackTrace();
 
         }
+
+    }
+
+    public static void printAllInformation(Truck[] trucks, Driver[] drivers) {
+        System.out.println("-----------------------------");
+        Arrays.stream(trucks).forEach(System.out::println);
+        System.out.println("---------------------------------------");
+        Arrays.stream(drivers).forEach(System.out::println);
+
 
     }
 }

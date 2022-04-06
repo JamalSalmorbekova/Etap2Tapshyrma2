@@ -49,24 +49,23 @@ public class Truck {
         this.state = state;
     }
 
-    public static Truck makeATruck(int id, String name, String driver, State state) {
-        Truck truck = new Truck();
-        truck.id = id;
-        truck.name = name;
-        truck.driver = driver;
-        truck.state = state;
-        return truck;
-    }
-
-    public static void changeDriver(Truck truck, Driver driver) {
 
 
-        if (truck.state.equals(State.BASE)) {
-
-            truck.setDriver(driver.getName());
-            driver.setBus(truck.getName());
-
+    public static void changeDriver(Truck truck, Driver[] drivers) {
+        for (Driver d:drivers) {
+            if(d.getBus().matches("[^a-zA-Z]*")){
+                truck.setDriver(d.getName());
+                d.setBus(truck.getName());
+                break;
+            }
         }
+
+
+//        if (truck.state.equals(State.BASE)) {
+//            truck.setDriver(driver.getName());
+//            driver.setBus(truck.getName());
+//
+//        }
 
 
         try {
@@ -121,14 +120,13 @@ public class Truck {
             if (truck.state.equals(State.ROUTE)) {
                 throw new InvalidChangeAttemptException();
             }
-        }catch (InvalidChangeAttemptException e){
+        } catch (InvalidChangeAttemptException e) {
             System.err.printf("YOU CAN'T START REPAIRING , BECAUSE TRUCK[%S] ON THE ROUTE \n", truck.getName());
         }
-        if(truck.state.equals(State.BASE)){
-            truck.state=State.REPAIR;
+        if (truck.state.equals(State.BASE)) {
+            truck.state = State.REPAIR;
         }
     }
-
 
 
     @Override

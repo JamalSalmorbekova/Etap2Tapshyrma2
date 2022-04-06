@@ -2,19 +2,20 @@
   {
     "id": 1,
     "name": "Renault Magnum",
-    "driver": "       ",
+    "driver": "Victor ",
     "state": "BASE"
   },
   {
     "id": 2,
     "name": "Volvo         ",
     "driver": "       ",
-    "state": "REPAIR"
+    "state": "BASE"
   },
   {
     "id": 3,
     "name": "DAF XT        ",
     "driver": "       ",
-    "state": "ROUTE"
+    "state": "BASE"
   }
-]
+]]
+]]
