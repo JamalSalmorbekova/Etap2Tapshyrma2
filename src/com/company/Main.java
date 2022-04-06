@@ -10,9 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static com.company.State.*;
 
@@ -34,7 +32,27 @@ public class Main {
         Driver driver2 = new Driver(3, "Nikolay", "               ");
         Driver[] drivers = {driver, driver2, driver1};
 
-        Truck.changeDriver(truck, driver);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("ENTER ID OF TRUCK TO SEE ALL INFORMATION ABOUT IT: ");
+        int a = scanner.nextInt();
+
+        for (Truck t : trucks) {
+            if (a == t.getId()) {
+                System.out.println("N  : " + t.getId());
+                System.out.println("Truck : " + t.getName());
+                System.out.println("Driver : " + t.getDriver());
+                System.out.println("Truck State: " + t.getState());
+            }
+        }
+        
+
+
+//        Truck.changeDriver(truck, driver);
+//        Truck.startDriving(truck);
+//        Truck.changeDriver(truck, driver1);
+//
+//        Truck.changeDriver(truck, driver);
 
         String json = GSON.toJson(trucks);
         write(json);
@@ -42,17 +60,17 @@ public class Main {
         String json1 = GSON.toJson(drivers);
         writeDrivers(json1);
 
-        System.out.println("#   |      Bus     |  Driver   |    State    ");
-        System.out.println("====+==============+===========+=============");
+//        System.out.println("#   |      Bus     |  Driver   |    State    ");
+//        System.out.println("====+==============+===========+=============");
+//
+//        Arrays.stream(trucks).forEach(System.out::println);
 
-        Arrays.stream(trucks).forEach(System.out::println);
-
-        System.out.println();
-
-        System.out.println("#   |   Driver     |  Bus      ");
-        System.out.println("====+==============+============");
-
-        Arrays.stream(drivers).forEach(System.out::println);
+//        System.out.println();
+//
+//        System.out.println("#   |   Driver     |  Bus      ");
+//        System.out.println("====+==============+============");
+//
+//        Arrays.stream(drivers).forEach(System.out::println);
     }
 
     public static void write(String o) {
