@@ -42,31 +42,17 @@ public class Main {
         String json1 = GSON.toJson(drivers);
         writeDrivers(json1);
 
-
-//        Truck[] trucks1 = GSON.fromJson(read(), Truck[].class);
         System.out.println("#   |      Bus     |  Driver   |    State    ");
         System.out.println("====+==============+===========+=============");
 
-
-
-        for (Truck t : trucks) {
-            System.out.println(t);
-
-        }
-
+        Arrays.stream(trucks).forEach(System.out::println);
 
         System.out.println();
 
-
-//        Driver[] drivers1 = GSON.fromJson(readDriver(), Driver[].class);
         System.out.println("#   |   Driver     |  Bus      ");
         System.out.println("====+==============+============");
 
-        for (Driver d : drivers) {
-            System.out.println(d);
-
-        }
-
+        Arrays.stream(drivers).forEach(System.out::println);
     }
 
     public static void write(String o) {
@@ -75,9 +61,7 @@ public class Main {
             Files.writeString(path, o, StandardOpenOption.WRITE, StandardOpenOption.CREATE);
         } catch (IOException e) {
             e.printStackTrace();
-
         }
-
     }
 
     public static void writeDrivers(String o) {
@@ -90,31 +74,4 @@ public class Main {
         }
 
     }
-
-//    public static String read() {
-//        String json = "";
-//        try {
-//            int a;
-//            FileReader fileReader = new FileReader(String.valueOf(PATH));
-//            while ((a = fileReader.read()) != -1) {
-//                json += (char) a;
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return json;
-//    }
-//
-//    public static String readDriver() {
-//        String json = "";
-//        try {
-//            int a;
-//            FileReader fileReader = new FileReader(String.valueOf(PATH1));
-//            while ((a = fileReader.read()) != -1) {
-//                json += (char) a;
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return json;
-    }
+}
