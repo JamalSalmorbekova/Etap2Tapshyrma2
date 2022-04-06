@@ -6,6 +6,7 @@ public class Truck {
     private String driver;
     private State state;
 
+
     public Truck() {
     }
 
@@ -47,33 +48,40 @@ public class Truck {
     public void setState(State state) {
         this.state = state;
     }
-    public static Truck makeATruck(int id, String name, String driver, State state){
-        Truck truck=new Truck();
-        truck.id=id;
-        truck.name=name;
-        truck.driver=driver;
-        truck.state=state;
+
+    public static Truck makeATruck(int id, String name, String driver, State state) {
+        Truck truck = new Truck();
+        truck.id = id;
+        truck.name = name;
+        truck.driver = driver;
+        truck.state = state;
         return truck;
     }
+
     public static void changeDriver(Truck truck, Driver driver) {
 
 
         if (truck.state.equals(State.BASE)) {
+
             truck.setDriver(driver.getName());
+            driver.setBus(truck.getName());
+
         }
+
+
         try {
             if (truck.state.equals(State.ROUTE)) {
                 throw new InvalidChangeAttemptException();
             }
         } catch (InvalidChangeAttemptException e) {
-            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE ROUTE", truck.getName());
+            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE ROUTE\n", truck.getName());
         }
         try {
             if (truck.state.equals(State.REPAIR)) {
                 throw new InvalidChangeAttemptException();
             }
         } catch (InvalidChangeAttemptException e) {
-            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE REPAIR", truck.getName());
+            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE REPAIR\n", truck.getName());
         }
 
 
@@ -85,19 +93,19 @@ public class Truck {
 //            System.out.printf("TRUCK [%S] IS ON ROUTE", truck.getName());
         }
         try {
-            if (truck.getDriver() == null) {
+            if (truck.getDriver().matches("[^a-zA-Z]*")) {
                 throw new InvalidChangeAttemptException();
             }
 
         } catch (InvalidChangeAttemptException e) {
-            System.err.printf("THE TRUCK[%S] HAVE NOT A DRIVER", truck.getName());
+            System.err.printf("THE TRUCK[%S] HAVE NOT A DRIVER\n", truck.getName());
         }
         try {
             if (truck.state.equals(State.REPAIR)) {
                 throw new InvalidChangeAttemptException();
             }
         } catch (InvalidChangeAttemptException e) {
-            System.err.printf("YOU CAN'T COMMENCE TO DRIVE , BECAUSE THE TRUCK[%S] ON THE REPAIR", truck.getName());
+            System.err.printf("YOU CAN'T COMMENCE TO DRIVE , BECAUSE THE TRUCK[%S] ON THE REPAIR\n", truck.getName());
         }
     }
 
@@ -106,17 +114,26 @@ public class Truck {
             if (truck.state.equals(State.REPAIR)) {
                 throw new InvalidChangeAttemptException();
             }
+        } catch (InvalidChangeAttemptException e) {
+            System.err.printf("THIS TRUCK[%S] ALREADY ON THE REPAIR\n", truck.getName());
+        }
+        try {
+            if (truck.state.equals(State.ROUTE)) {
+                throw new InvalidChangeAttemptException();
+            }
         }catch (InvalidChangeAttemptException e){
-            System.err.printf("THIS TRUCK[%S] ON THE REPAIR", truck.getName());
+            System.err.printf("YOU CAN'T START REPAIRING , BECAUSE TRUCK[%S] ON THE ROUTE \n", truck.getName());
+        }
+        if(truck.state.equals(State.BASE)){
+            truck.state=State.REPAIR;
         }
     }
 
 
 
-
     @Override
     public String toString() {
-        return id+"   |"+name+"|  " +driver+"  |    "+ state +'\n';
+        return id + "   |" + name + "|  " + driver + "  |    " + state + '\n';
 
     }
 }

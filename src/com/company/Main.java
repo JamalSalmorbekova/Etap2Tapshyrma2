@@ -24,46 +24,45 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Truck truck=new Truck(1, "Renault Magnum", "       ", BASE);
-        Truck truck1=new Truck(2, "Volvo         ", "       ", REPAIR);
-        Truck truck2=new Truck(3, "DAF XT        ", "       ", ROUTE);
-        Truck[]trucks={truck, truck1, truck2};
+        Truck truck = new Truck(1, "Renault Magnum", "       ", BASE);
+        Truck truck1 = new Truck(2, "Volvo         ", "       ", REPAIR);
+        Truck truck2 = new Truck(3, "DAF XT        ", "       ", ROUTE);
+        Truck[] trucks = {truck, truck1, truck2};
 
+        Driver driver = new Driver(1, "Victor ", "               ");
+        Driver driver1 = new Driver(2, "Vasiliy", "               ");
+        Driver driver2 = new Driver(3, "Nikolay", "               ");
+        Driver[] drivers = {driver, driver2, driver1};
 
-        String json= GSON.toJson(trucks);
+        Truck.changeDriver(truck, driver);
+
+        String json = GSON.toJson(trucks);
         write(json);
-        Truck[]trucks1=GSON.fromJson(read(), Truck[].class);
+
+        String json1 = GSON.toJson(drivers);
+        writeDrivers(json1);
+
+
+//        Truck[] trucks1 = GSON.fromJson(read(), Truck[].class);
         System.out.println("#   |      Bus     |  Driver   |    State    ");
         System.out.println("====+==============+===========+=============");
 
-        Truck.startDriving(truck);
 
-        for (Truck t:trucks) {
+
+        for (Truck t : trucks) {
             System.out.println(t);
 
         }
 
-        Driver driver=new Driver(1, "Victor ", "               ");
-        Driver driver1=new Driver(2, "Vasiliy", "               ");
-        Driver driver2=new Driver(3, "Nikolay", "               ");
-
-
-
-
-
-
-        Driver[]drivers={driver, driver2, driver1};
-
 
         System.out.println();
 
-        String json1=GSON.toJson(drivers);
-        writeDrivers(json1);
-        Driver[]drivers1=GSON.fromJson(readDriver(),  Driver[].class);
+
+//        Driver[] drivers1 = GSON.fromJson(readDriver(), Driver[].class);
         System.out.println("#   |   Driver     |  Bus      ");
         System.out.println("====+==============+============");
 
-        for (Driver d:drivers1) {
+        for (Driver d : drivers) {
             System.out.println(d);
 
         }
@@ -80,6 +79,7 @@ public class Main {
         }
 
     }
+
     public static void writeDrivers(String o) {
         try {
             Path path = Paths.get(String.valueOf(PATH1));
@@ -90,28 +90,31 @@ public class Main {
         }
 
     }
-    public static String read(){
-        String json="";
-        try{
-            int a;
-            FileReader fileReader=new FileReader(String.valueOf(PATH));
-            while((a= fileReader.read())!=-1){
-                json+=(char)a;
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }return json;
+
+//    public static String read() {
+//        String json = "";
+//        try {
+//            int a;
+//            FileReader fileReader = new FileReader(String.valueOf(PATH));
+//            while ((a = fileReader.read()) != -1) {
+//                json += (char) a;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return json;
+//    }
+//
+//    public static String readDriver() {
+//        String json = "";
+//        try {
+//            int a;
+//            FileReader fileReader = new FileReader(String.valueOf(PATH1));
+//            while ((a = fileReader.read()) != -1) {
+//                json += (char) a;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return json;
     }
-    public static String readDriver(){
-        String json="";
-        try{
-            int a;
-            FileReader fileReader=new FileReader(String.valueOf(PATH1));
-            while((a= fileReader.read())!=-1){
-                json+=(char)a;
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }return json;
-    }
-}
