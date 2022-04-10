@@ -1,4 +1,4 @@
-package com.company;
+package com.company.exceptions;
 
 public class InvalidChangeAttemptException extends RuntimeException {
     public InvalidChangeAttemptException() {

@@ -1,4 +1,4 @@
-package com.company;
+package com.company.models;
 
 public class Driver {
     private int id;
@@ -37,14 +37,6 @@ public class Driver {
         this.bus = bus;
     }
 
-
-    public static Driver driver(int id, String name, String bus){
-        Driver driver=new Driver();
-        driver.id=id;
-        driver.name=name;
-        driver.bus=bus;
-        return driver;
-    }
 
     @Override
     public String toString() {

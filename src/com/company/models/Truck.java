@@ -1,4 +1,7 @@
-package com.company;
+package com.company.models;
+
+import com.company.exceptions.InvalidChangeAttemptException;
+import com.company.enums.State;
 
 public class Truck {
     private int id;
@@ -60,14 +63,6 @@ public class Truck {
             }
         }
 
-
-//        if (truck.state.equals(State.BASE)) {
-//            truck.setDriver(driver.getName());
-//            driver.setBus(truck.getName());
-//
-//        }
-
-
         try {
             if (truck.state.equals(State.ROUTE)) {
                 throw new InvalidChangeAttemptException();
@@ -89,13 +84,11 @@ public class Truck {
     public static void startDriving(Truck truck) {
         if (truck.state.equals(State.BASE)) {
             truck.setState(State.ROUTE);
-//            System.out.printf("TRUCK [%S] IS ON ROUTE", truck.getName());
         }
         try {
             if (truck.getDriver().matches("[^a-zA-Z]*")) {
                 throw new InvalidChangeAttemptException();
             }
-
         } catch (InvalidChangeAttemptException e) {
             System.err.printf("THE TRUCK[%S] HAVE NOT A DRIVER\n", truck.getName());
         }
@@ -127,8 +120,6 @@ public class Truck {
             truck.state = State.REPAIR;
         }
     }
-
-
     @Override
     public String toString() {
         return id + "   |" + name + "|  " + driver + "  |    " + state + '\n';
