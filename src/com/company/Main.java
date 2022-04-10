@@ -24,7 +24,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        final DriverService driverService = new DriverService();
+
         final TruckService truckService = new TruckService();
         truckService.writeTrucks();
         truckService.findAllTrucks();
