@@ -15,4 +15,10 @@ public class TruckService {
     public void writeTrucks(){
         truckRepository.writeTrucks(TruckRepository.trucks);
     }
+    public void findAllTrucks(){
+        truckRepository.readTrucks();
+    }
+    public void run(){
+        truckRepository.Operations();
+    }
 }

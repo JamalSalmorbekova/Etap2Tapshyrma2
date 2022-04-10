@@ -15,5 +15,10 @@ public class DriverService {
     public void writeDrivers(){
         driverRepository.writeDrivers(DriverRepository.drivers);
     }
+    public void findAllDrivers(){
+        driverRepository.readDrivers();
+
+
+    }
 
 }

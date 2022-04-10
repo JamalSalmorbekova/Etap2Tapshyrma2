@@ -54,72 +54,7 @@ public class Truck {
 
 
 
-    public static void changeDriver(Truck truck, Driver[] drivers) {
-        for (Driver d:drivers) {
-            if(d.getBus().matches("[^a-zA-Z]*")){
-                truck.setDriver(d.getName());
-                d.setBus(truck.getName());
-                break;
-            }
-        }
 
-        try {
-            if (truck.state.equals(State.ROUTE)) {
-                throw new InvalidChangeAttemptException();
-            }
-        } catch (InvalidChangeAttemptException e) {
-            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE ROUTE\n", truck.getName());
-        }
-        try {
-            if (truck.state.equals(State.REPAIR)) {
-                throw new InvalidChangeAttemptException();
-            }
-        } catch (InvalidChangeAttemptException e) {
-            System.err.printf("YOU CAN'T CHANGE DRIVER, BECAUSE THE TRUCK[%S] ON THE REPAIR\n", truck.getName());
-        }
-
-
-    }
-
-    public static void startDriving(Truck truck) {
-        if (truck.state.equals(State.BASE)) {
-            truck.setState(State.ROUTE);
-        }
-        try {
-            if (truck.getDriver().matches("[^a-zA-Z]*")) {
-                throw new InvalidChangeAttemptException();
-            }
-        } catch (InvalidChangeAttemptException e) {
-            System.err.printf("THE TRUCK[%S] HAVE NOT A DRIVER\n", truck.getName());
-        }
-        try {
-            if (truck.state.equals(State.REPAIR)) {
-                throw new InvalidChangeAttemptException();
-            }
-        } catch (InvalidChangeAttemptException e) {
-            System.err.printf("YOU CAN'T COMMENCE TO DRIVE , BECAUSE THE TRUCK[%S] ON THE REPAIR\n", truck.getName());
-        }
-    }
-
-    public static void startRepair(Truck truck) {
-        try {
-            if (truck.state.equals(State.REPAIR)) {
-                throw new InvalidChangeAttemptException();
-            }
-        } catch (InvalidChangeAttemptException e) {
-            System.err.printf("THIS TRUCK[%S] ALREADY ON THE REPAIR\n", truck.getName());
-        }
-        try {
-            if (truck.state.equals(State.ROUTE)) {
-                throw new InvalidChangeAttemptException();
-            }
-        } catch (InvalidChangeAttemptException e) {
-            System.err.printf("YOU CAN'T START REPAIRING , BECAUSE TRUCK[%S] ON THE ROUTE \n", truck.getName());
-        }
-        if (truck.state.equals(State.BASE)) {
-            truck.state = State.REPAIR;
-        }
-    }
     @Override
     public String toString() {
         return id + "   |" + name + "|  " + driver + "  |    " + state + '\n';
